@@ -12,11 +12,14 @@ import rough from "roughjs";
 import { Sparkles, Calculator, BookOpen } from "lucide-react";
 
 export interface MathLessonProps {
-  title: string;
-  formula: string;
+  title?: string;
+  formula?: string;
 }
 
-export const MathLesson: React.FC<MathLessonProps> = ({ title, formula }) => {
+export const MathLesson: React.FC<MathLessonProps> = ({
+  title = "勾股定理 (Pythagorean Theorem)",
+  formula = "a^2 + b^2 = c^2",
+}) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
