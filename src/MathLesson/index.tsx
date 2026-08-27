@@ -89,18 +89,18 @@ export const MathLesson: React.FC<MathLessonProps> = ({
 
   return (
     <AbsoluteFill
-      style={{
-        backgroundColor: "#0f172a",
-        color: "#f8fafc",
-        fontFamily: "'Segoe UI', Roboto, sans-serif",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "60px 80px",
-        boxSizing: "border-box",
-      }}
-    >
+style={{
+  backgroundColor: "#0f172a",
+  color: "#f8fafc",
+  fontFamily: "'Segoe UI', Roboto, sans-serif",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "space-between",
+  padding: "60px 80px",
+  boxSizing: "border-box"
+}}
+ >
       {/* Header */}
       <header
         style={{
