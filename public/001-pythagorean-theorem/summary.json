@@ -3,8 +3,9 @@
   "title": "勾股定理 (Pythagorean Theorem)",
   "subtitle": "直角三角形两直角边的平方和等于斜边的平方",
   "formula": "a^2 + b^2 = c^2",
-  "durationInFrames": 575,
+  "audioDurationSeconds": 18.168,
   "fps": 30,
+  "durationInFrames": 546,
   "formulaCard": {
     "badge": "核心公式",
     "description": "其中 a 与 b 为直角边，c 为斜边。"
@@ -123,8 +124,9 @@
   },
   "timeline": {
     "headerStartFrame": 0,
-    "triangleStartFrame": 150,
-    "formulaStartFrame": 375,
+    "triangleStartFrame": 15,
+    "formulaStartFrame": 40,
+    "drawingStartFrame": 175,
     "formulaHighlightStartFrame": 385
   },
   "audio": {
@@ -163,7 +165,7 @@
     {
       "id": 3,
       "startFrame": 385,
-      "endFrame": 550,
+      "endFrame": 546,
       "text": "即公式：a 的平方加上 b 的平方，等于 c 的平方。"
     }
   ]

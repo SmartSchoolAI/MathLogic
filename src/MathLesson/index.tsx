@@ -39,34 +39,34 @@ export const MathLesson: React.FC<MathLessonProps> = ({
     durationInFrames,
   } = lessonData;
 
-  // 1. Header Animation
+  // 1. Header Animation (Frame 0+)
   const titleSpring = spring({
     frame: frame - timeline.headerStartFrame,
     fps,
     config: { damping: 12 },
   });
-  const titleY = interpolate(titleSpring, [0, 1], [-100, 0]);
+  const titleY = interpolate(titleSpring, [0, 1], [-80, 0]);
   const titleOpacity = interpolate(titleSpring, [0, 1], [0, 1]);
 
-  // 2. Triangle Card Animation
+  // 2. Triangle Card Entrance Animation (Frame 15+ early entrance)
   const triangleSpring = spring({
     frame: frame - timeline.triangleStartFrame,
     fps,
     config: { damping: 14 },
   });
-  const triangleScale = interpolate(triangleSpring, [0, 1], [0.6, 1]);
+  const triangleScale = interpolate(triangleSpring, [0, 1], [0.8, 1]);
   const triangleOpacity = interpolate(triangleSpring, [0, 1], [0, 1]);
 
-  // 3. Formula Card Animation
+  // 3. Formula Card Entrance Animation (Frame 40+ early entrance)
   const formulaSpring = spring({
     frame: frame - timeline.formulaStartFrame,
     fps,
     config: { damping: 14 },
   });
-  const formulaScale = interpolate(formulaSpring, [0, 1], [0.5, 1]);
+  const formulaScale = interpolate(formulaSpring, [0, 1], [0.8, 1]);
   const formulaOpacity = interpolate(formulaSpring, [0, 1], [0, 1]);
 
-  // RoughJS Canvas Drawing (Driven 100% by geometry JSON schema)
+  // RoughJS Canvas Drawing (With Skeleton Placeholder + Dynamic Stroke)
   useEffect(() => {
     if (!canvasRef.current) return;
     const canvas = canvasRef.current;
@@ -78,7 +78,22 @@ export const MathLesson: React.FC<MathLessonProps> = ({
 
     const { vertices, edges, fill, rightAngleMark } = geometry;
 
-    // Draw Edges dynamically from JSON
+    // 1. Draw Dotted Skeleton Outline Placeholder for Early Frame Fullness (Frame 15 -> 175)
+    if (frame >= timeline.triangleStartFrame) {
+      const polygonPoints = [vertices.C, vertices.B, vertices.A] as [
+        number,
+        number
+      ][];
+      rc.polygon(polygonPoints, {
+        stroke: "rgba(148, 163, 184, 0.3)",
+        strokeWidth: 2,
+        roughness: 0.5,
+        strokeLineDash: [8, 6],
+        seed: 999,
+      });
+    }
+
+    // 2. Draw Colored Edges dynamically from JSON as narration proceeds
     let allEdgesComplete = true;
 
     edges.forEach((edge) => {
@@ -115,9 +130,8 @@ export const MathLesson: React.FC<MathLessonProps> = ({
       }
     });
 
-    // Draw Area Fill & Right Angle Symbol when timeline conditions met
+    // 3. Draw Area Fill & Right Angle Symbol when triangle complete
     if (allEdgesComplete && frame >= fill.startFrame) {
-      // Polygon Fill
       const polygonPoints = [vertices.C, vertices.B, vertices.A] as [
         number,
         number
@@ -132,7 +146,6 @@ export const MathLesson: React.FC<MathLessonProps> = ({
         seed: fill.seed,
       });
 
-      // Right Angle Square Marker
       rc.rectangle(
         rightAngleMark.x,
         rightAngleMark.y,
@@ -146,7 +159,7 @@ export const MathLesson: React.FC<MathLessonProps> = ({
         }
       );
     }
-  }, [frame, geometry]);
+  }, [frame, geometry, timeline]);
 
   // Current Subtitle Cue
   const currentCue = subtitles.find(
@@ -232,7 +245,7 @@ export const MathLesson: React.FC<MathLessonProps> = ({
               height={geometry.canvasHeight}
             />
 
-            {/* Edge Math Labels (a, b, c) - Dynamically mapped from JSON */}
+            {/* Edge Math Labels (a, b, c) */}
             {geometry.edgeLabels.map((lbl, idx) => {
               if (frame < lbl.startFrame) return null;
               return (
@@ -253,7 +266,7 @@ export const MathLesson: React.FC<MathLessonProps> = ({
               );
             })}
 
-            {/* Vertex Labels (A, B, C) - Dynamically mapped from JSON */}
+            {/* Vertex Labels (A, B, C) */}
             {geometry.vertexLabels.map((lbl, idx) => {
               if (frame < lbl.startFrame) return null;
               return (
@@ -295,10 +308,10 @@ export const MathLesson: React.FC<MathLessonProps> = ({
             borderRadius: "24px",
             border: isFormulaHighlighted
               ? "2px solid #38bdf8"
-              : "2px solid #818cf8",
+              : "2px solid rgba(129, 140, 248, 0.4)",
             boxShadow: isFormulaHighlighted
               ? "0 0 50px rgba(56, 189, 248, 0.4)"
-              : "0 0 30px rgba(129, 140, 248, 0.2)",
+              : "0 0 25px rgba(0, 0, 0, 0.4)",
             textAlign: "center",
             transition: "all 0.3s ease",
           }}
