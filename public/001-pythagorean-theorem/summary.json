@@ -3,9 +3,9 @@
   "title": "勾股定理与其三大经典证明 (Pythagorean Theorem & 3 Proofs)",
   "subtitle": "直角三角形两直角边的平方和等于斜边的平方",
   "formula": "a^2 + b^2 = c^2",
-  "audioDurationSeconds": 91.56,
+  "audioDurationSeconds": 146.28,
   "fps": 30,
-  "durationInFrames": 2747,
+  "durationInFrames": 4388,
   "audio": {
     "full": "001-pythagorean-theorem/audio.mp3"
   },
@@ -13,37 +13,37 @@
     {
       "id": "section-1",
       "type": "definition",
-      "title": "1. 定理基本定义",
-      "subtitle": "直角三角形ABC与边长关系",
+      "title": "1. 勾股定理基本定义",
+      "subtitle": "直角三角形ABC与边长 a, b, c 关系",
       "startFrame": 0,
-      "endFrame": 584
+      "endFrame": 728
     },
     {
       "id": "section-2",
-      "type": "area-squares-proof",
-      "title": "2. 证明一：三边正方形面积法",
-      "subtitle": "Area(a²) + Area(b²) = Area(c²)",
-      "formula": "Area(a^2) + Area(b^2) = Area(c^2)",
-      "startFrame": 584,
-      "endFrame": 1352
+      "type": "rearrangement-proof",
+      "title": "2. 证明一：图形重排分割法 (TED-Ed经典)",
+      "subtitle": "相同大正方形 (a+b)² 减去4个三角形 ⇒ c² = a² + b²",
+      "formula": "c^2 = (a+b)^2 - 4 \\times (\\frac{1}{2}ab) = a^2 + b^2",
+      "startFrame": 728,
+      "endFrame": 2114
     },
     {
       "id": "section-3",
-      "type": "zhao-shuang-proof",
-      "title": "3. 证明二：赵爽弦图抵消证明",
-      "subtitle": "2ab + (b-a)² = c² ⇒ 2ab与-2ab抵消",
-      "formula": "2ab + (b-a)^2 = c^2 \\Longrightarrow a^2 + b^2 = c^2",
-      "startFrame": 1352,
-      "endFrame": 2105
+      "type": "similarity-proof",
+      "title": "3. 证明二：相似三角形高分割法",
+      "subtitle": "做斜边垂线AD ⇒ AB²=BC×BD, AC²=BC×CD",
+      "formula": "AB^2 + AC^2 = BC \\times (BD + CD) = BC^2",
+      "startFrame": 2114,
+      "endFrame": 3440
     },
     {
       "id": "section-4",
-      "type": "garfield-proof",
-      "title": "4. 证明三：加菲尔德梯形抵消法",
-      "subtitle": "½(a+b)² = ab + ½c² ⇒ 两侧消去ab",
-      "formula": "\\frac{1}{2}(a+b)^2 = ab + \\frac{1}{2}c^2 \\Longrightarrow a^2 + b^2 = c^2",
-      "startFrame": 2105,
-      "endFrame": 2747
+      "type": "zhao-shuang-proof",
+      "title": "4. 证明三：中国古代赵爽弦图法",
+      "subtitle": "2ab + (b-a)² = c² ⇒ 2ab与-2ab抵消",
+      "formula": "c^2 = 2ab + (b-a)^2 = a^2 + b^2",
+      "startFrame": 3440,
+      "endFrame": 4389
     }
   ],
   "subtitles": [
@@ -51,57 +51,71 @@
       "id": 1,
       "sectionId": "section-1",
       "startFrame": 0,
-      "endFrame": 191,
-      "text": "欢迎来到数学逻辑课。今天我们来深入学习并证明勾股定理。"
+      "endFrame": 238,
+      "text": "欢迎来到数学逻辑课。今天我们来深入探讨几何学中最著名的定理——勾股定理。"
     },
     {
       "id": 2,
       "sectionId": "section-1",
-      "startFrame": 200,
-      "endFrame": 566,
-      "text": "在任意直角三角形ABC中，直角边为 a 和 b，斜边为 c。勾股定理指出：a的平方加上b的平方，恒等于斜边c的平方。"
+      "startFrame": 247,
+      "endFrame": 710,
+      "text": "对于任意直角三角形ABC，直角顶点为A，两条直角边为 a 和 b，斜边为 c。勾股定理指出：两直角边的平方和 a的平方加b的平方，恒等于斜边 c 的平方。"
     },
     {
       "id": 3,
       "sectionId": "section-2",
-      "startFrame": 584,
-      "endFrame": 863,
-      "text": "第一种证明方法：三边正方形面积法。我们在直角边 a、b 和斜边 c 上分别向外作正方形。"
+      "startFrame": 728,
+      "endFrame": 976,
+      "text": "第一种证明：图形重排分割法。我们构造两个边长均为 a加b 的相同大正方形。"
     },
     {
       "id": 4,
       "sectionId": "section-2",
-      "startFrame": 872,
-      "endFrame": 1334,
-      "text": "蓝色的面积为 a的平方，紫色的面积为 b的平方。将这两个正方形面积叠加，恰好填满斜边正方形 c的平方，直观验证了 a的平方加b的平方等于c的平方。"
+      "startFrame": 985,
+      "endFrame": 1640,
+      "text": "在左图大正方形中，放入四个直角三角形，中间剩余的红色区域面积恰好为 c的平方。在右图大正方形中，我们仅仅将这四个直角三角形重新排列到四周，此时剩余的空白区域被分割为两个正方形，面积分别为 b的平方 与 a的平方！"
     },
     {
       "id": 5,
-      "sectionId": "section-3",
-      "startFrame": 1352,
-      "endFrame": 1696,
-      "text": "第二种证明方法：我国古代著名的赵爽弦图。四个直角三角形面积和为 2ab，中间小正方形面积为 b减a的平方。"
+      "sectionId": "section-2",
+      "startFrame": 1649,
+      "endFrame": 2096,
+      "text": "因为两个大正方形总面积完全相同，且都减去了四个相同的直角三角形，所以剩余的面积必定相等！这就极其直观地证明了 a的平方加b的平方等于c的平方。"
     },
     {
       "id": 6,
       "sectionId": "section-3",
-      "startFrame": 1705,
-      "endFrame": 2087,
-      "text": "展开相加得到 2ab 加 b的平方 减 2ab 加 a的平方。这里的 2ab 刚好互相抵消！完美导出 a的平方加b的平方等于c的平方。"
+      "startFrame": 2114,
+      "endFrame": 2455,
+      "text": "第二种证明：相似三角形作高比例法。在直角三角形ABC中，我们从直角顶点A向斜边BC做一条垂直线AD。"
     },
     {
       "id": 7,
-      "sectionId": "section-4",
-      "startFrame": 2105,
-      "endFrame": 2361,
-      "text": "第三种证明方法：加菲尔德梯形法。直角梯形总面积等于三个内切三角形的面积之和。"
+      "sectionId": "section-3",
+      "startFrame": 2464,
+      "endFrame": 2793,
+      "text": "垂线AD将原大三角形分割为两个小直角三角形。根据几何相似性，大三角形与两个小三角形全部相似！"
     },
     {
       "id": 8,
+      "sectionId": "section-3",
+      "startFrame": 2802,
+      "endFrame": 3422,
+      "text": "由相似比可得：AB的平方等于BC乘以BD，AC的平方等于BC乘以CD。将两式相加，提取公因式BC，BD加CD刚好等于斜边BC！从而精准推导出 AB的平方加AC的平方等于BC的平方。"
+    },
+    {
+      "id": 9,
       "sectionId": "section-4",
-      "startFrame": 2370,
-      "endFrame": 2729,
-      "text": "展开梯形面积公式后，两边的 ab 项刚好互相消去！两边同时乘以 2，再次完美证明了 a的平方加b的平方等于c的平方。"
+      "startFrame": 3440,
+      "endFrame": 3832,
+      "text": "第三种证明：中国古代赵爽弦图法。将四个全等的直角三角形围成一个边长为 c 的大正方形，中间留有一个边长为 b减a 的小正方形。"
+    },
+    {
+      "id": 10,
+      "sectionId": "section-4",
+      "startFrame": 3841,
+      "endFrame": 4371,
+      "text": "四个三角形面积总和为 2ab，加上中间小正方形展开式 b的平方减2ab加a的平方。这里的 2ab 与 负2ab 正好相互抵消！最终只剩下 a的平方加b的平方等于c的平方。"
     }
   ]
 }
