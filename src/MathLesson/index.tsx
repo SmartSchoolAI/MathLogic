@@ -1,50 +1,72 @@
 import React, { useEffect, useRef } from "react";
 import {
   AbsoluteFill,
+  Audio,
   interpolate,
   spring,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
 import { InlineMath, BlockMath } from "react-katex";
 import "katex/dist/katex.min.css";
 import rough from "roughjs";
-import { Sparkles, Calculator, BookOpen } from "lucide-react";
+import { Sparkles, Calculator, BookOpen, Volume2 } from "lucide-react";
+
+import defaultSummaryData from "../../public/001-pythagorean-theorem/summary.json";
+
+export type MathLessonData = typeof defaultSummaryData;
 
 export interface MathLessonProps {
-  title?: string;
-  formula?: string;
+  lessonData?: MathLessonData;
 }
 
 export const MathLesson: React.FC<MathLessonProps> = ({
-  title = "勾股定理 (Pythagorean Theorem)",
-  formula = "a^2 + b^2 = c^2",
+  lessonData = defaultSummaryData,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  // Remotion Spring Animation for Title
+  const {
+    title,
+    formula,
+    formulaCard,
+    geometry,
+    timeline,
+    audio,
+    subtitles,
+    durationInFrames,
+  } = lessonData;
+
+  // 1. Header Animation
   const titleSpring = spring({
-    frame,
+    frame: frame - timeline.headerStartFrame,
     fps,
     config: { damping: 12 },
   });
-
   const titleY = interpolate(titleSpring, [0, 1], [-100, 0]);
   const titleOpacity = interpolate(titleSpring, [0, 1], [0, 1]);
 
-  // Formula Fade-In & Scale
-  const formulaSpring = spring({
-    frame: frame - 30,
+  // 2. Triangle Card Animation
+  const triangleSpring = spring({
+    frame: frame - timeline.triangleStartFrame,
     fps,
     config: { damping: 14 },
   });
+  const triangleScale = interpolate(triangleSpring, [0, 1], [0.6, 1]);
+  const triangleOpacity = interpolate(triangleSpring, [0, 1], [0, 1]);
 
+  // 3. Formula Card Animation
+  const formulaSpring = spring({
+    frame: frame - timeline.formulaStartFrame,
+    fps,
+    config: { damping: 14 },
+  });
   const formulaScale = interpolate(formulaSpring, [0, 1], [0.5, 1]);
   const formulaOpacity = interpolate(formulaSpring, [0, 1], [0, 1]);
 
-  // RoughJS Canvas drawing for Right Triangle (Flicker-Free with fixed seeds)
+  // RoughJS Canvas Drawing (Driven 100% by geometry JSON schema)
   useEffect(() => {
     if (!canvasRef.current) return;
     const canvas = canvasRef.current;
@@ -54,99 +76,102 @@ export const MathLesson: React.FC<MathLessonProps> = ({
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const rc = rough.canvas(canvas);
 
-    // Triangle vertices
-    // C is right angle (80, 240), B is right vertex (320, 240), A is top vertex (80, 60)
-    const C: [number, number] = [80, 240];
-    const B: [number, number] = [300, 240];
-    const A: [number, number] = [80, 60];
+    const { vertices, edges, fill, rightAngleMark } = geometry;
 
-    // Progressive animation timeline
-    // 1. Draw base edge a (C -> B): Frame 40 -> 65
-    // 2. Draw height edge b (C -> A): Frame 65 -> 90
-    // 3. Draw hypotenuse c (A -> B): Frame 90 -> 115
-    const progressA = Math.min(1, Math.max(0, (frame - 40) / 25));
-    const progressB = Math.min(1, Math.max(0, (frame - 65) / 25));
-    const progressC = Math.min(1, Math.max(0, (frame - 90) / 25));
+    // Draw Edges dynamically from JSON
+    let allEdgesComplete = true;
 
-    // Edge a (Bottom: C -> B)
-    if (progressA > 0) {
-      const currentB: [number, number] = [
-        C[0] + (B[0] - C[0]) * progressA,
-        C[1],
+    edges.forEach((edge) => {
+      const fromPos = vertices[edge.from as keyof typeof vertices] as [
+        number,
+        number
       ];
-      rc.line(C[0], C[1], currentB[0], currentB[1], {
-        stroke: "#38bdf8",
-        strokeWidth: 3.5,
-        roughness: 1.0,
-        seed: 101, // Fixed seed prevents flickering across frames
-      });
-    }
-
-    // Edge b (Left vertical: C -> A)
-    if (progressB > 0) {
-      const currentA: [number, number] = [
-        C[0],
-        C[1] + (A[1] - C[1]) * progressB,
+      const toPos = vertices[edge.to as keyof typeof vertices] as [
+        number,
+        number
       ];
-      rc.line(C[0], C[1], currentA[0], currentA[1], {
-        stroke: "#818cf8",
-        strokeWidth: 3.5,
-        roughness: 1.0,
-        seed: 102, // Fixed seed
-      });
-    }
 
-    // Edge c (Hypotenuse: A -> B)
-    if (progressC > 0) {
-      const currentEnd: [number, number] = [
-        A[0] + (B[0] - A[0]) * progressC,
-        A[1] + (B[1] - A[1]) * progressC,
-      ];
-      rc.line(A[0], A[1], currentEnd[0], currentEnd[1], {
-        stroke: "#f59e0b",
-        strokeWidth: 4,
-        roughness: 1.0,
-        seed: 103, // Fixed seed
-      });
-    }
+      const progress = Math.min(
+        1,
+        Math.max(0, (frame - edge.startFrame) / edge.duration)
+      );
 
-    // Fill & Right angle mark after triangle complete
-    if (progressC >= 1) {
-      // Area Fill
-      rc.polygon([C, B, A], {
+      if (progress < 1) {
+        allEdgesComplete = false;
+      }
+
+      if (progress > 0) {
+        const currentEnd: [number, number] = [
+          fromPos[0] + (toPos[0] - fromPos[0]) * progress,
+          fromPos[1] + (toPos[1] - fromPos[1]) * progress,
+        ];
+
+        rc.line(fromPos[0], fromPos[1], currentEnd[0], currentEnd[1], {
+          stroke: edge.color,
+          strokeWidth: edge.strokeWidth,
+          roughness: 1.0,
+          seed: edge.seed,
+        });
+      }
+    });
+
+    // Draw Area Fill & Right Angle Symbol when timeline conditions met
+    if (allEdgesComplete && frame >= fill.startFrame) {
+      // Polygon Fill
+      const polygonPoints = [vertices.C, vertices.B, vertices.A] as [
+        number,
+        number
+      ][];
+      rc.polygon(polygonPoints, {
         stroke: "transparent",
-        fill: "rgba(56, 189, 248, 0.12)",
-        fillStyle: "hachure",
+        fill: fill.color,
+        fillStyle: fill.fillStyle as any,
         fillWeight: 1.5,
         hachureAngle: 60,
         roughness: 0.8,
-        seed: 104, // Fixed seed
+        seed: fill.seed,
       });
 
-      // Right angle marker square
-      rc.rectangle(C[0], C[1] - 24, 24, 24, {
-        stroke: "#f43f5e",
-        strokeWidth: 2,
-        roughness: 0.8,
-        seed: 105, // Fixed seed
-      });
+      // Right Angle Square Marker
+      rc.rectangle(
+        rightAngleMark.x,
+        rightAngleMark.y,
+        rightAngleMark.width,
+        rightAngleMark.height,
+        {
+          stroke: rightAngleMark.color,
+          strokeWidth: 2.5,
+          roughness: 0.8,
+          seed: rightAngleMark.seed,
+        }
+      );
     }
-  }, [frame]);
+  }, [frame, geometry]);
+
+  // Current Subtitle Cue
+  const currentCue = subtitles.find(
+    (c) => frame >= c.startFrame && frame < c.endFrame
+  );
+
+  const isFormulaHighlighted = frame >= timeline.formulaHighlightStartFrame;
 
   return (
     <AbsoluteFill
-style={{
-  backgroundColor: "#0f172a",
-  color: "#f8fafc",
-  fontFamily: "'Segoe UI', Roboto, sans-serif",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "space-between",
-  padding: "60px 80px",
-  boxSizing: "border-box"
-}}
- >
+      style={{
+        backgroundColor: "#0f172a",
+        color: "#f8fafc",
+        fontFamily: "'Segoe UI', Roboto, sans-serif",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "50px 80px",
+        boxSizing: "border-box",
+      }}
+    >
+      {/* Dynamic TTS Voiceover Track */}
+      <Audio src={staticFile(audio.full)} volume={1.0} />
+
       {/* Header */}
       <header
         style={{
@@ -160,7 +185,7 @@ style={{
         <BookOpen size={48} color="#38bdf8" />
         <h1
           style={{
-            fontSize: "56px",
+            fontSize: "52px",
             fontWeight: 800,
             background: "linear-gradient(135deg, #38bdf8 0%, #818cf8 100%)",
             WebkitBackgroundClip: "text",
@@ -181,17 +206,19 @@ style={{
           maxWidth: "1400px",
           alignItems: "center",
           justifyContent: "space-around",
-          margin: "40px 0",
+          margin: "20px 0",
         }}
       >
-        {/* RoughJS Triangle Canvas */}
+        {/* RoughJS Geometry Canvas Card */}
         <div
           style={{
+            transform: `scale(${triangleScale})`,
+            opacity: triangleOpacity,
             position: "relative",
-            background: "rgba(30, 41, 59, 0.8)",
-            padding: "24px 36px",
+            background: "rgba(30, 41, 59, 0.85)",
+            padding: "20px 36px",
             borderRadius: "24px",
-            border: "1px solid rgba(56, 189, 248, 0.2)",
+            border: "1px solid rgba(56, 189, 248, 0.3)",
             boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.5)",
             display: "flex",
             flexDirection: "column",
@@ -199,88 +226,52 @@ style={{
           }}
         >
           <div style={{ position: "relative" }}>
-            <canvas ref={canvasRef} width={380} height={280} />
+            <canvas
+              ref={canvasRef}
+              width={geometry.canvasWidth}
+              height={geometry.canvasHeight}
+            />
 
-            {/* Edge Label a (bottom) */}
-            <div
-              style={{
-                position: "absolute",
-                left: "180px",
-                bottom: "10px",
-                color: "#38bdf8",
-                fontSize: "24px",
-                fontWeight: 700,
-              }}
-            >
-              <InlineMath math="a" />
-            </div>
+            {/* Edge Math Labels (a, b, c) - Dynamically mapped from JSON */}
+            {geometry.edgeLabels.map((lbl, idx) => {
+              if (frame < lbl.startFrame) return null;
+              return (
+                <div
+                  key={`edge-lbl-${idx}`}
+                  style={{
+                    position: "absolute",
+                    left: lbl.left,
+                    top: lbl.top,
+                    bottom: lbl.bottom,
+                    color: lbl.color,
+                    fontSize: lbl.fontSize,
+                    fontWeight: 700,
+                  }}
+                >
+                  <InlineMath math={lbl.symbol} />
+                </div>
+              );
+            })}
 
-            {/* Edge Label b (left vertical) */}
-            <div
-              style={{
-                position: "absolute",
-                left: "45px",
-                top: "140px",
-                color: "#818cf8",
-                fontSize: "24px",
-                fontWeight: 700,
-              }}
-            >
-              <InlineMath math="b" />
-            </div>
-
-            {/* Edge Label c (hypotenuse) */}
-            <div
-              style={{
-                position: "absolute",
-                left: "205px",
-                top: "125px",
-                color: "#f59e0b",
-                fontSize: "26px",
-                fontWeight: 700,
-              }}
-            >
-              <InlineMath math="c" />
-            </div>
-
-            {/* Vertex C (Right angle vertex) */}
-            <div
-              style={{
-                position: "absolute",
-                left: "55px",
-                bottom: "15px",
-                color: "#94a3b8",
-                fontSize: "18px",
-              }}
-            >
-              C
-            </div>
-
-            {/* Vertex B */}
-            <div
-              style={{
-                position: "absolute",
-                left: "310px",
-                bottom: "15px",
-                color: "#94a3b8",
-                fontSize: "18px",
-              }}
-            >
-              B
-            </div>
-
-            {/* Vertex A */}
-            <div
-              style={{
-                position: "absolute",
-                left: "55px",
-                top: "40px",
-                color: "#94a3b8",
-                fontSize: "18px",
-              }}
-            >
-              A
-            </div>
+            {/* Vertex Labels (A, B, C) - Dynamically mapped from JSON */}
+            {geometry.vertexLabels.map((lbl, idx) => {
+              if (frame < lbl.startFrame) return null;
+              return (
+                <div
+                  key={`vertex-lbl-${idx}`}
+                  style={{
+                    position: "absolute",
+                    left: lbl.left,
+                    top: lbl.top,
+                    bottom: lbl.bottom,
+                    color: lbl.color,
+                    fontSize: "18px",
+                  }}
+                >
+                  {lbl.name}
+                </div>
+              );
+            })}
           </div>
 
           <div
@@ -290,7 +281,7 @@ style={{
               color: "#94a3b8",
             }}
           >
-            直角三角形几何示意图 (RoughJS Canvas)
+            {geometry.title}
           </div>
         </div>
 
@@ -299,12 +290,17 @@ style={{
           style={{
             transform: `scale(${formulaScale})`,
             opacity: formulaOpacity,
-            background: "rgba(30, 41, 59, 0.9)",
+            background: "rgba(30, 41, 59, 0.95)",
             padding: "40px 60px",
             borderRadius: "24px",
-            border: "2px solid #818cf8",
-            boxShadow: "0 0 40px rgba(129, 140, 248, 0.3)",
+            border: isFormulaHighlighted
+              ? "2px solid #38bdf8"
+              : "2px solid #818cf8",
+            boxShadow: isFormulaHighlighted
+              ? "0 0 50px rgba(56, 189, 248, 0.4)"
+              : "0 0 30px rgba(129, 140, 248, 0.2)",
             textAlign: "center",
+            transition: "all 0.3s ease",
           }}
         >
           <div
@@ -320,10 +316,10 @@ style={{
             }}
           >
             <Calculator size={28} />
-            <span>核心公式</span>
+            <span>{formulaCard.badge}</span>
           </div>
 
-          <div style={{ fontSize: "48px" }}>
+          <div style={{ fontSize: "52px" }}>
             <BlockMath math={formula} />
           </div>
 
@@ -334,24 +330,52 @@ style={{
               color: "#cbd5e1",
             }}
           >
-            其中 <InlineMath math="a" /> 与 <InlineMath math="b" /> 为直角边，
-            <InlineMath math="c" /> 为斜边。
+            {formulaCard.description}
           </div>
         </div>
       </main>
 
-      {/* Footer / Subtitle Progress */}
+      {/* Subtitles Overlay */}
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "1100px",
+          minHeight: "56px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "12px",
+          background: "rgba(15, 23, 42, 0.9)",
+          border: "1px solid rgba(255, 255, 255, 0.15)",
+          borderRadius: "16px",
+          padding: "10px 24px",
+          boxShadow: "0 8px 16px rgba(0, 0, 0, 0.4)",
+        }}
+      >
+        <Volume2 size={24} color="#38bdf8" />
+        <span
+          style={{
+            color: "#f8fafc",
+            fontSize: "24px",
+            fontWeight: 600,
+            letterSpacing: "0.5px",
+          }}
+        >
+          {currentCue ? currentCue.text : "..."}
+        </span>
+      </div>
+
+      {/* Footer / Progress Bar */}
       <footer
         style={{
           width: "100%",
           textAlign: "center",
-          fontSize: "20px",
+          fontSize: "18px",
           color: "#64748b",
-          borderTop: "1px solid rgba(255, 255, 255, 0.1)",
-          paddingTop: "20px",
+          paddingTop: "12px",
         }}
       >
-        MathLogic Remotion Animation • Frame: {frame} / 300
+        MathLogic Edge TTS Sync Animation • Frame: {frame} / {durationInFrames}
       </footer>
     </AbsoluteFill>
   );

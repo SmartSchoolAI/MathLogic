@@ -1,0 +1,170 @@
+{
+  "id": "001-pythagorean-theorem",
+  "title": "勾股定理 (Pythagorean Theorem)",
+  "subtitle": "直角三角形两直角边的平方和等于斜边的平方",
+  "formula": "a^2 + b^2 = c^2",
+  "durationInFrames": 575,
+  "fps": 30,
+  "formulaCard": {
+    "badge": "核心公式",
+    "description": "其中 a 与 b 为直角边，c 为斜边。"
+  },
+  "geometry": {
+    "title": "直角三角形几何示意图 (RoughJS)",
+    "canvasWidth": 380,
+    "canvasHeight": 280,
+    "vertices": {
+      "A": [80, 60],
+      "B": [300, 240],
+      "C": [80, 240]
+    },
+    "edges": [
+      {
+        "id": "a",
+        "symbol": "a",
+        "name": "直角边",
+        "color": "#38bdf8",
+        "from": "C",
+        "to": "B",
+        "startFrame": 175,
+        "duration": 45,
+        "strokeWidth": 4,
+        "seed": 101
+      },
+      {
+        "id": "b",
+        "symbol": "b",
+        "name": "直角边",
+        "color": "#818cf8",
+        "from": "C",
+        "to": "A",
+        "startFrame": 225,
+        "duration": 45,
+        "strokeWidth": 4,
+        "seed": 102
+      },
+      {
+        "id": "c",
+        "symbol": "c",
+        "name": "斜边",
+        "color": "#f59e0b",
+        "from": "A",
+        "to": "B",
+        "startFrame": 275,
+        "duration": 45,
+        "strokeWidth": 4.5,
+        "seed": 103
+      }
+    ],
+    "fill": {
+      "color": "rgba(56, 189, 248, 0.15)",
+      "fillStyle": "hachure",
+      "startFrame": 320,
+      "seed": 104
+    },
+    "rightAngleMark": {
+      "x": 80,
+      "y": 216,
+      "width": 24,
+      "height": 24,
+      "color": "#f43f5e",
+      "startFrame": 320,
+      "seed": 105
+    },
+    "edgeLabels": [
+      {
+        "symbol": "a",
+        "color": "#38bdf8",
+        "left": "180px",
+        "bottom": "10px",
+        "fontSize": "24px",
+        "startFrame": 175
+      },
+      {
+        "symbol": "b",
+        "color": "#818cf8",
+        "left": "45px",
+        "top": "140px",
+        "fontSize": "24px",
+        "startFrame": 225
+      },
+      {
+        "symbol": "c",
+        "color": "#f59e0b",
+        "left": "205px",
+        "top": "125px",
+        "fontSize": "26px",
+        "startFrame": 275
+      }
+    ],
+    "vertexLabels": [
+      {
+        "name": "C",
+        "left": "55px",
+        "bottom": "15px",
+        "color": "#94a3b8",
+        "startFrame": 320
+      },
+      {
+        "name": "B",
+        "left": "310px",
+        "bottom": "15px",
+        "color": "#94a3b8",
+        "startFrame": 320
+      },
+      {
+        "name": "A",
+        "left": "55px",
+        "top": "40px",
+        "color": "#94a3b8",
+        "startFrame": 320
+      }
+    ]
+  },
+  "timeline": {
+    "headerStartFrame": 0,
+    "triangleStartFrame": 150,
+    "formulaStartFrame": 375,
+    "formulaHighlightStartFrame": 385
+  },
+  "audio": {
+    "full": "001-pythagorean-theorem/audio.mp3",
+    "parts": [
+      {
+        "id": "p1",
+        "file": "001-pythagorean-theorem/p1.mp3",
+        "text": "欢迎来到数学逻辑课。今天我们来学习勾股定理。"
+      },
+      {
+        "id": "p2",
+        "file": "001-pythagorean-theorem/p2.mp3",
+        "text": "对于任意直角三角形，两条直角边 a 和 b 的平方和，等于斜边 c 的平方。"
+      },
+      {
+        "id": "p3",
+        "file": "001-pythagorean-theorem/p3.mp3",
+        "text": "即公式：a 的平方加上 b 的平方，等于 c 的平方。"
+      }
+    ]
+  },
+  "subtitles": [
+    {
+      "id": 1,
+      "startFrame": 0,
+      "endFrame": 165,
+      "text": "欢迎来到数学逻辑课。今天我们来学习勾股定理。"
+    },
+    {
+      "id": 2,
+      "startFrame": 165,
+      "endFrame": 385,
+      "text": "对于任意直角三角形，两条直角边 a 和 b 的平方和，等于斜边 c 的平方。"
+    },
+    {
+      "id": 3,
+      "startFrame": 385,
+      "endFrame": 550,
+      "text": "即公式：a 的平方加上 b 的平方，等于 c 的平方。"
+    }
+  ]
+}
