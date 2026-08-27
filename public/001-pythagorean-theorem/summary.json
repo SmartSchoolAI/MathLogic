@@ -3,9 +3,9 @@
   "title": "勾股定理与其三大经典证明 (Pythagorean Theorem & 3 Proofs)",
   "subtitle": "直角三角形两直角边的平方和等于斜边的平方",
   "formula": "a^2 + b^2 = c^2",
-  "audioDurationSeconds": 71.352,
+  "audioDurationSeconds": 73.2,
   "fps": 30,
-  "durationInFrames": 2141,
+  "durationInFrames": 2196,
   "audio": {
     "full": "001-pythagorean-theorem/audio.mp3"
   },
@@ -16,7 +16,7 @@
       "title": "1. 定理基本定义",
       "subtitle": "直角三角形三边几何关系",
       "startFrame": 0,
-      "endFrame": 409
+      "endFrame": 420
     },
     {
       "id": "section-2",
@@ -24,8 +24,8 @@
       "title": "2. 证明法一：三边正方形面积法",
       "subtitle": "直角边正方形面积之和等于斜边正方形面积",
       "formula": "Area(a^2) + Area(b^2) = Area(c^2)",
-      "startFrame": 409,
-      "endFrame": 1049
+      "startFrame": 420,
+      "endFrame": 1072
     },
     {
       "id": "section-3",
@@ -33,8 +33,8 @@
       "title": "3. 证明法二：赵爽弦图拼接法",
       "subtitle": "四个全等直角三角形围成斜边正方形",
       "formula": "4 \\times (\\frac{1}{2}ab) + (b-a)^2 = c^2",
-      "startFrame": 1049,
-      "endFrame": 1656
+      "startFrame": 1072,
+      "endFrame": 1690
     },
     {
       "id": "section-4",
@@ -42,8 +42,8 @@
       "title": "4. 证明法三：加菲尔德梯形面积法",
       "subtitle": "梯形总面积等于三个内切三角形面积之和",
       "formula": "\\frac{1}{2}(a+b)^2 = 2 \\times (\\frac{1}{2}ab) + \\frac{1}{2}c^2",
-      "startFrame": 1656,
-      "endFrame": 2140
+      "startFrame": 1690,
+      "endFrame": 2197
     }
   ],
   "subtitles": [
@@ -51,56 +51,57 @@
       "id": 1,
       "sectionId": "section-1",
       "startFrame": 0,
-      "endFrame": 394,
-      "text": "欢迎来到数学逻辑课。今天我们来深入学习并证明勾股定理。在任意直角三角形中，两直角边 a 和 b 的平方和，等于斜边 c 的平方。"
+      "endFrame": 191,
+      "text": "欢迎来到数学逻辑课。今天我们来深入学习并证明勾股定理。"
     },
     {
       "id": 2,
-      "sectionId": "section-2",
-      "startFrame": 409,
-      "endFrame": 1034,
-      "text": "第一种证明方法：三边正方形面积法。我们在直角边 a、b 和斜边 c 上分别构建正方形。直角边正方形面积分别为 a 的平方与 b 的平方。可以看到，这两个正方形的面积相加，恰好等于斜边正方形的面积 c 的平方。"
+      "sectionId": "section-1",
+      "startFrame": 199,
+      "endFrame": 405,
+      "text": "在任意直角三角形中，两直角边 a 和 b 的平方和，等于斜边 c 的平方。"
     },
     {
       "id": 3,
-      "sectionId": "section-3",
-      "startFrame": 1049,
-      "endFrame": 1641,
-      "text": "第二种证明方法：我国古代著名的赵爽弦图。将四个全等的直角三角形围成一个边长为 c 的大正方形，中间留有一个边长为 b 减 a 的小正方形。化简总面积后同样精准导出 a 的平方加 b 的平方等于 c 的平方。"
+      "sectionId": "section-2",
+      "startFrame": 420,
+      "endFrame": 693,
+      "text": "第一种证明方法：三边正方形面积法。我们在直角边 a、b 和斜边 c 上分别构建正方形。"
     },
     {
       "id": 4,
+      "sectionId": "section-2",
+      "startFrame": 701,
+      "endFrame": 1057,
+      "text": "直角边正方形面积分别为 a 的平方与 b 的平方。可以看到，这两个正方形的面积相加，恰好等于斜边正方形的面积 c 的平方。"
+    },
+    {
+      "id": 5,
+      "sectionId": "section-3",
+      "startFrame": 1072,
+      "endFrame": 1482,
+      "text": "第二种证明方法：我国古代著名的赵爽弦图。将四个全等的直角三角形围成一个边长为 c 的大正方形，中间留有一个边长为 b 减 a 的小正方形。"
+    },
+    {
+      "id": 6,
+      "sectionId": "section-3",
+      "startFrame": 1490,
+      "endFrame": 1675,
+      "text": "化简总面积后同样精准导出 a 的平方加 b 的平方等于 c 的平方。"
+    },
+    {
+      "id": 7,
       "sectionId": "section-4",
-      "startFrame": 1656,
-      "endFrame": 2125,
-      "text": "第三种证明方法：加菲尔德梯形法。利用两个全等直角三角形拼成直角梯形，梯形的总面积等于三个内切三角形的面积之和，展开化简后再次完美证明了勾股定理。"
+      "startFrame": 1690,
+      "endFrame": 1928,
+      "text": "第三种证明方法：加菲尔德梯形法。利用两个全等直角三角形拼成直角梯形。"
+    },
+    {
+      "id": 8,
+      "sectionId": "section-4",
+      "startFrame": 1936,
+      "endFrame": 2182,
+      "text": "梯形的总面积等于三个内切三角形的面积之和，展开化简后再次完美证明了勾股定理。"
     }
-  ],
-  "proofsData": {
-    "section1": {
-      "title": "直角三角形基本定义",
-      "a": 3,
-      "b": 4,
-      "c": 5
-    },
-    "section2": {
-      "title": "证明一：三边正方形面积法",
-      "desc": "边长为 a, b 的正方形面积之和 (a² + b²) 恰好拼成斜边正方形面积 c²",
-      "squareAColor": "#38bdf8",
-      "squareBColor": "#818cf8",
-      "squareCColor": "#f59e0b"
-    },
-    "section3": {
-      "title": "证明二：中国古代赵爽弦图法",
-      "desc": "4个全等直角三角形 (2ab) + 中间小正方形 (b-a)² = 斜边大正方形 c²",
-      "triangleColor": "#38bdf8",
-      "innerSquareColor": "#f43f5e"
-    },
-    "section4": {
-      "title": "证明三：加菲尔德梯形面积法",
-      "desc": "直角梯形总面积 = 2个直角三角形 + 1个等腰直角三角形",
-      "trapezoidColor": "#818cf8",
-      "hypotenuseTriangleColor": "#f59e0b"
-    }
-  }
+  ]
 }

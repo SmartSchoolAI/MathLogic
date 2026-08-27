@@ -64,10 +64,10 @@ export const MathLesson: React.FC<MathLessonProps> = ({
     fps,
     config: { damping: 14 },
   });
-  const cardScale = interpolate(cardSpring, [0, 1], [0.92, 1]);
+  const cardScale = interpolate(cardSpring, [0, 1], [0.95, 1]);
   const cardOpacity = interpolate(cardSpring, [0, 1], [0, 1]);
 
-  // RoughJS Multi-Proof Progressive Geometry Canvas Renderer
+  // RoughJS Multi-Proof Progressive Geometry Canvas Renderer (Large Scale)
   useEffect(() => {
     if (!canvasRef.current) return;
     const canvas = canvasRef.current;
@@ -78,18 +78,18 @@ export const MathLesson: React.FC<MathLessonProps> = ({
     const rc = rough.canvas(canvas);
 
     // ----------------------------------------------------
-    // Section 1: Basic Definition (Progressive Hand Drawing)
+    // Section 1: Basic Definition (Canvas 660x450, Enlarged)
     // ----------------------------------------------------
     if (currentSection.id === "section-1") {
-      const C: [number, number] = [100, 240];
-      const B: [number, number] = [340, 240];
-      const A: [number, number] = [100, 60];
+      const C: [number, number] = [120, 360];
+      const B: [number, number] = [520, 360]; // base = 400
+      const A: [number, number] = [120, 80];  // height = 280
 
       // Dotted skeleton outline
       rc.polygon([C, B, A], {
-        stroke: "rgba(148, 163, 184, 0.25)",
-        strokeWidth: 2,
-        strokeLineDash: [8, 6],
+        stroke: "rgba(148, 163, 184, 0.3)",
+        strokeWidth: 3,
+        strokeLineDash: [10, 8],
         seed: 999,
       });
 
@@ -98,7 +98,7 @@ export const MathLesson: React.FC<MathLessonProps> = ({
       if (pA > 0) {
         rc.line(C[0], C[1], C[0] + (B[0] - C[0]) * pA, C[1], {
           stroke: "#38bdf8",
-          strokeWidth: 4,
+          strokeWidth: 5,
           seed: 101,
         });
       }
@@ -108,7 +108,7 @@ export const MathLesson: React.FC<MathLessonProps> = ({
       if (pB > 0) {
         rc.line(C[0], C[1], C[0], C[1] + (A[1] - C[1]) * pB, {
           stroke: "#818cf8",
-          strokeWidth: 4,
+          strokeWidth: 5,
           seed: 102,
         });
       }
@@ -118,7 +118,7 @@ export const MathLesson: React.FC<MathLessonProps> = ({
       if (pC > 0) {
         rc.line(A[0], A[1], A[0] + (B[0] - A[0]) * pC, A[1] + (B[1] - A[1]) * pC, {
           stroke: "#f59e0b",
-          strokeWidth: 4.5,
+          strokeWidth: 6,
           seed: 103,
         });
       }
@@ -127,77 +127,77 @@ export const MathLesson: React.FC<MathLessonProps> = ({
       if (pC >= 1) {
         rc.polygon([C, B, A], {
           stroke: "transparent",
-          fill: "rgba(56, 189, 248, 0.15)",
+          fill: "rgba(56, 189, 248, 0.18)",
           fillStyle: "hachure",
           seed: 104,
         });
-        rc.rectangle(C[0], C[1] - 24, 24, 24, {
+        rc.rectangle(C[0], C[1] - 32, 32, 32, {
           stroke: "#f43f5e",
-          strokeWidth: 2.5,
+          strokeWidth: 3,
           seed: 105,
         });
       }
     }
 
     // ----------------------------------------------------
-    // Section 2: Area Squares Proof (Progressive Drawing)
+    // Section 2: Area Squares Proof (Canvas 660x450, Enlarged & Centered)
     // ----------------------------------------------------
     else if (currentSection.id === "section-2") {
-      // Centered Triangle: C=(200, 220), B=(280, 220), A=(200, 140)
-      const C: [number, number] = [200, 220];
-      const B: [number, number] = [280, 220]; // leg a = 80
-      const A: [number, number] = [200, 140]; // leg b = 80
+      // Triangle: C=(270, 290), B=(380, 290), A=(270, 180) -> leg a=110, leg b=110
+      const C: [number, number] = [270, 290];
+      const B: [number, number] = [380, 290];
+      const A: [number, number] = [270, 180];
 
       // Step 1: Draw Center Triangle
       const pTri = Math.min(1, Math.max(0, localFrame / 40));
       if (pTri > 0) {
         rc.polygon([C, B, A], {
           stroke: "#f8fafc",
-          strokeWidth: 3,
-          fill: "rgba(255, 255, 255, 0.1)",
+          strokeWidth: 3.5,
+          fill: "rgba(255, 255, 255, 0.12)",
           seed: 201,
         });
       }
 
-      // Step 2: Dynamically Grow Square A (on bottom leg a)
+      // Step 2: Square A (on bottom leg a)
       const pSqA = Math.min(1, Math.max(0, (localFrame - 50) / 70));
       if (pSqA > 0) {
-        rc.rectangle(200, 220, 80, 80 * pSqA, {
+        rc.rectangle(270, 290, 110, 110 * pSqA, {
           stroke: "#38bdf8",
-          strokeWidth: 3,
-          fill: "rgba(56, 189, 248, 0.25)",
+          strokeWidth: 3.5,
+          fill: "rgba(56, 189, 248, 0.3)",
           fillStyle: "hachure",
           seed: 202,
         });
       }
 
-      // Step 3: Dynamically Grow Square B (on left leg b)
+      // Step 3: Square B (on left leg b)
       const pSqB = Math.min(1, Math.max(0, (localFrame - 130) / 70));
       if (pSqB > 0) {
-        const w = 80 * pSqB;
-        rc.rectangle(200 - w, 140, w, 80, {
+        const w = 110 * pSqB;
+        rc.rectangle(270 - w, 180, w, 110, {
           stroke: "#818cf8",
-          strokeWidth: 3,
-          fill: "rgba(129, 140, 248, 0.25)",
+          strokeWidth: 3.5,
+          fill: "rgba(129, 140, 248, 0.3)",
           fillStyle: "hachure",
           seed: 203,
         });
       }
 
-      // Step 4: Dynamically Grow Square C (on hypotenuse c)
+      // Step 4: Square C (on hypotenuse c)
       const pSqC = Math.min(1, Math.max(0, (localFrame - 210) / 90));
       if (pSqC > 0) {
-        // Hypotenuse vector from A(200,140) to B(280,220): dx=80, dy=80
-        // Perpendicular vector: (-80, 80) -> scaled by pSqC
-        const P1: [number, number] = [200, 140];
-        const P2: [number, number] = [280, 220];
-        const P3: [number, number] = [280 + 80 * pSqC, 220 - 80 * pSqC];
-        const P4: [number, number] = [200 + 80 * pSqC, 140 - 80 * pSqC];
+        // Vector A(270,180) -> B(380,290): dx=110, dy=110
+        // Perpendicular offset vector: (110, -110)
+        const P1: [number, number] = [270, 180];
+        const P2: [number, number] = [380, 290];
+        const P3: [number, number] = [380 + 110 * pSqC, 290 - 110 * pSqC];
+        const P4: [number, number] = [270 + 110 * pSqC, 180 - 110 * pSqC];
 
         rc.polygon([P1, P2, P3, P4], {
           stroke: "#f59e0b",
-          strokeWidth: 3.5,
-          fill: "rgba(245, 158, 11, 0.3)",
+          strokeWidth: 4,
+          fill: "rgba(245, 158, 11, 0.35)",
           fillStyle: "hachure",
           seed: 204,
         });
@@ -205,26 +205,26 @@ export const MathLesson: React.FC<MathLessonProps> = ({
     }
 
     // ----------------------------------------------------
-    // Section 3: Zhao Shuang Proof (Progressive 4 Triangles)
+    // Section 3: Zhao Shuang Proof (Canvas 660x450, Enlarged)
     // ----------------------------------------------------
     else if (currentSection.id === "section-3") {
-      const size = 200;
-      const ox = 140;
-      const oy = 60;
-      const a = 60;
-      const b = 140;
+      const size = 300;
+      const ox = 180;
+      const oy = 75;
+      const a = 90;
+      const b = 210;
 
       // Step 1: Draw Outer Big Square Boundary (c x c)
       const pOuter = Math.min(1, Math.max(0, localFrame / 50));
       if (pOuter > 0) {
         rc.rectangle(ox, oy, size * pOuter, size * pOuter, {
           stroke: "#f59e0b",
-          strokeWidth: 3.5,
+          strokeWidth: 4,
           seed: 301,
         });
       }
 
-      // Step 2: Progressively add 4 Triangles one by one
+      // Step 2: Progressively add 4 Triangles
       const t1: [number, number][] = [[ox, oy], [ox + b, oy], [ox, oy + a]];
       const t2: [number, number][] = [[ox + size, oy], [ox + size, oy + b], [ox + size - a, oy]];
       const t3: [number, number][] = [[ox + size, oy + size], [ox + a, oy + size], [ox + size, oy + size - a]];
@@ -235,28 +235,27 @@ export const MathLesson: React.FC<MathLessonProps> = ({
       allTriangles.forEach((tPoints, idx) => {
         const pTri = Math.min(1, Math.max(0, (localFrame - 60 - idx * 45) / 35));
         if (pTri > 0) {
-          // Animate triangle stroke/fill
           rc.polygon(tPoints, {
             stroke: "#38bdf8",
-            strokeWidth: 2.5,
-            fill: "rgba(56, 189, 248, 0.25)",
+            strokeWidth: 3,
+            fill: "rgba(56, 189, 248, 0.3)",
             fillStyle: "hachure",
             seed: 310 + idx,
           });
         }
       });
 
-      // Step 3: Reveal Inner Small Square Hole (b - a)^2
+      // Step 3: Inner Small Square Hole (b - a)^2
       const pInner = Math.min(1, Math.max(0, (localFrame - 250) / 40));
       if (pInner > 0) {
         const ix = ox + a;
         const iy = oy + a;
-        const isize = b - a; // 80
+        const isize = b - a; // 120
 
         rc.rectangle(ix, iy, isize * pInner, isize * pInner, {
           stroke: "#f43f5e",
-          strokeWidth: 3,
-          fill: "rgba(244, 63, 94, 0.4)",
+          strokeWidth: 3.5,
+          fill: "rgba(244, 63, 94, 0.45)",
           fillStyle: "solid",
           seed: 320,
         });
@@ -264,13 +263,13 @@ export const MathLesson: React.FC<MathLessonProps> = ({
     }
 
     // ----------------------------------------------------
-    // Section 4: Garfield's Trapezoid Proof (Progressive)
+    // Section 4: Garfield's Trapezoid Proof (Canvas 660x450, Enlarged)
     // ----------------------------------------------------
     else if (currentSection.id === "section-4") {
-      const ox = 110;
-      const oy = 270;
-      const a = 80;
-      const b = 140;
+      const ox = 150;
+      const oy = 380;
+      const a = 120;
+      const b = 210;
 
       const P1: [number, number] = [ox, oy];
       const P2: [number, number] = [ox + a + b, oy];
@@ -283,22 +282,22 @@ export const MathLesson: React.FC<MathLessonProps> = ({
       if (pTrap > 0) {
         rc.polygon([P1, P2, P3, P4], {
           stroke: "#818cf8",
-          strokeWidth: 3.5,
+          strokeWidth: 4,
           seed: 401,
         });
       }
 
-      // Step 2: Draw Interior Partition Lines
+      // Step 2: Interior Partition Lines
       const pLine = Math.min(1, Math.max(0, (localFrame - 60) / 40));
       if (pLine > 0) {
         rc.line(Mid[0], Mid[1], P4[0], P4[1], {
           stroke: "#f59e0b",
-          strokeWidth: 3,
+          strokeWidth: 3.5,
           seed: 402,
         });
         rc.line(Mid[0], Mid[1], P3[0], P3[1], {
           stroke: "#f59e0b",
-          strokeWidth: 3,
+          strokeWidth: 3.5,
           seed: 403,
         });
       }
@@ -309,7 +308,7 @@ export const MathLesson: React.FC<MathLessonProps> = ({
         // Triangle 1 (Left)
         rc.polygon([P1, Mid, P4], {
           stroke: "transparent",
-          fill: "rgba(56, 189, 248, 0.25)",
+          fill: "rgba(56, 189, 248, 0.3)",
           fillStyle: "hachure",
           seed: 404,
         });
@@ -317,7 +316,7 @@ export const MathLesson: React.FC<MathLessonProps> = ({
         // Triangle 2 (Right)
         rc.polygon([Mid, P2, P3], {
           stroke: "transparent",
-          fill: "rgba(129, 140, 248, 0.25)",
+          fill: "rgba(129, 140, 248, 0.3)",
           fillStyle: "hachure",
           seed: 405,
         });
@@ -325,7 +324,7 @@ export const MathLesson: React.FC<MathLessonProps> = ({
         // Triangle 3 (Middle Isosceles)
         rc.polygon([P4, Mid, P3], {
           stroke: "transparent",
-          fill: "rgba(245, 158, 11, 0.3)",
+          fill: "rgba(245, 158, 11, 0.35)",
           fillStyle: "hachure",
           seed: 406,
         });
@@ -348,7 +347,7 @@ export const MathLesson: React.FC<MathLessonProps> = ({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: "36px 60px",
+        padding: "24px 40px",
         boxSizing: "border-box",
       }}
     >
@@ -363,15 +362,15 @@ export const MathLesson: React.FC<MathLessonProps> = ({
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: "10px",
+          gap: "12px",
           width: "100%",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-          <BookOpen size={40} color="#38bdf8" />
+        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+          <BookOpen size={48} color="#38bdf8" />
           <h1
             style={{
-              fontSize: "42px",
+              fontSize: "48px",
               fontWeight: 800,
               background: "linear-gradient(135deg, #38bdf8 0%, #818cf8 100%)",
               WebkitBackgroundClip: "text",
@@ -381,20 +380,21 @@ export const MathLesson: React.FC<MathLessonProps> = ({
           >
             {title}
           </h1>
-          <Sparkles size={32} color="#f59e0b" />
+          <Sparkles size={40} color="#f59e0b" />
         </div>
 
-        {/* Section Tabs Progress Indicator */}
+        {/* Section Tabs Progress Indicator (Enlarged) */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "14px",
+            gap: "18px",
             marginTop: "4px",
-            background: "rgba(30, 41, 59, 0.8)",
-            padding: "6px 18px",
+            background: "rgba(30, 41, 59, 0.9)",
+            padding: "10px 28px",
             borderRadius: "50px",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
+            border: "1px solid rgba(255, 255, 255, 0.15)",
+            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
           }}
         >
           {sections.map((sec, idx) => {
@@ -407,27 +407,27 @@ export const MathLesson: React.FC<MathLessonProps> = ({
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "6px",
-                  fontSize: "15px",
+                  gap: "8px",
+                  fontSize: "20px",
                   fontWeight: isActive ? 700 : 500,
                   color: isActive
                     ? "#38bdf8"
                     : isPassed
                     ? "#818cf8"
-                    : "#64748b",
-                  padding: "4px 10px",
-                  borderRadius: "20px",
+                    : "#94a3b8",
+                  padding: "6px 16px",
+                  borderRadius: "24px",
                   background: isActive
-                    ? "rgba(56, 189, 248, 0.15)"
+                    ? "rgba(56, 189, 248, 0.2)"
                     : "transparent",
                   border: isActive
-                    ? "1px solid rgba(56, 189, 248, 0.4)"
+                    ? "2px solid #38bdf8"
                     : "1px solid transparent",
                   transition: "all 0.3s ease",
                 }}
               >
                 {isPassed ? (
-                  <CheckCircle2 size={15} color="#818cf8" />
+                  <CheckCircle2 size={20} color="#818cf8" />
                 ) : (
                   <span>{idx + 1}.</span>
                 )}
@@ -438,29 +438,29 @@ export const MathLesson: React.FC<MathLessonProps> = ({
         </div>
       </header>
 
-      {/* Main Stage Content */}
+      {/* Main Stage Content (Maximizing Space Usage) */}
       <main
         style={{
           transform: `scale(${cardScale})`,
           opacity: cardOpacity,
           display: "flex",
           width: "100%",
-          maxWidth: "1400px",
+          maxWidth: "1720px",
           alignItems: "center",
           justifyContent: "center",
-          gap: "40px",
+          gap: "50px",
           margin: "10px 0",
         }}
       >
-        {/* RoughJS Geometry Canvas Card (Fixed Dimensions to Prevent Overflow) */}
+        {/* RoughJS Geometry Canvas Card (Enlarged Canvas 660x450) */}
         <div
           style={{
             position: "relative",
-            background: "rgba(30, 41, 59, 0.85)",
-            padding: "16px 24px",
-            borderRadius: "24px",
-            border: "1px solid rgba(56, 189, 248, 0.3)",
-            boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.5)",
+            background: "rgba(30, 41, 59, 0.9)",
+            padding: "20px 28px",
+            borderRadius: "28px",
+            border: "2px solid rgba(56, 189, 248, 0.4)",
+            boxShadow: "0 25px 30px -5px rgba(0, 0, 0, 0.6)",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -469,14 +469,14 @@ export const MathLesson: React.FC<MathLessonProps> = ({
           }}
         >
           <div style={{ position: "relative" }}>
-            <canvas ref={canvasRef} width={480} height={340} />
+            <canvas ref={canvasRef} width={660} height={450} />
           </div>
 
           <div
             style={{
-              marginTop: "6px",
-              fontSize: "17px",
-              fontWeight: 600,
+              marginTop: "8px",
+              fontSize: "22px",
+              fontWeight: 700,
               color: "#38bdf8",
             }}
           >
@@ -484,21 +484,21 @@ export const MathLesson: React.FC<MathLessonProps> = ({
           </div>
         </div>
 
-        {/* KaTeX Proof & Formula Explanation Card */}
+        {/* KaTeX Proof & Formula Explanation Card (Enlarged Card & Fonts) */}
         <div
           style={{
             background: "rgba(30, 41, 59, 0.95)",
-            padding: "30px 45px",
-            borderRadius: "24px",
+            padding: "44px 56px",
+            borderRadius: "28px",
             border: "2px solid #818cf8",
-            boxShadow: "0 0 35px rgba(129, 140, 248, 0.3)",
+            boxShadow: "0 0 45px rgba(129, 140, 248, 0.35)",
             textAlign: "center",
-            maxWidth: "580px",
+            maxWidth: "820px",
             width: "100%",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            gap: "14px",
+            gap: "20px",
             boxSizing: "border-box",
           }}
         >
@@ -506,27 +506,28 @@ export const MathLesson: React.FC<MathLessonProps> = ({
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "10px",
+              gap: "12px",
               color: "#c084fc",
-              fontSize: "21px",
-              fontWeight: 600,
+              fontSize: "26px",
+              fontWeight: 700,
             }}
           >
-            <Calculator size={24} />
+            <Calculator size={32} />
             <span>{currentSection.subtitle}</span>
           </div>
 
-          {/* Math Formula Presentation */}
-          <div style={{ fontSize: "38px", margin: "6px 0" }}>
+          {/* Math Formula Presentation (Enlarged to 52px) */}
+          <div style={{ fontSize: "52px", margin: "12px 0" }}>
             <BlockMath math={currentSection.formula || formula} />
           </div>
 
-          {/* Explanation Text */}
+          {/* Explanation Text (Enlarged to 25px) */}
           <div
             style={{
-              fontSize: "19px",
+              fontSize: "25px",
               color: "#cbd5e1",
-              lineHeight: 1.5,
+              lineHeight: 1.6,
+              fontWeight: 500,
             }}
           >
             {currentSection.id === "section-1" && (
@@ -557,29 +558,29 @@ export const MathLesson: React.FC<MathLessonProps> = ({
         </div>
       </main>
 
-      {/* Subtitles Bar Overlay */}
+      {/* Subtitles Bar Overlay (Enlarged to Full Screen Width) */}
       <div
         style={{
           width: "100%",
-          maxWidth: "1200px",
-          minHeight: "52px",
+          maxWidth: "1650px",
+          minHeight: "68px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          gap: "12px",
+          gap: "16px",
           background: "rgba(15, 23, 42, 0.95)",
-          border: "1px solid rgba(255, 255, 255, 0.15)",
-          borderRadius: "16px",
-          padding: "10px 24px",
-          boxShadow: "0 8px 16px rgba(0, 0, 0, 0.4)",
+          border: "1px solid rgba(255, 255, 255, 0.2)",
+          borderRadius: "20px",
+          padding: "12px 36px",
+          boxShadow: "0 10px 25px rgba(0, 0, 0, 0.5)",
         }}
       >
-        <Volume2 size={24} color="#38bdf8" />
+        <Volume2 size={32} color="#38bdf8" />
         <span
           style={{
             color: "#f8fafc",
-            fontSize: "21px",
-            fontWeight: 600,
+            fontSize: "28px",
+            fontWeight: 700,
             letterSpacing: "0.5px",
           }}
         >
@@ -592,7 +593,7 @@ export const MathLesson: React.FC<MathLessonProps> = ({
         style={{
           width: "100%",
           textAlign: "center",
-          fontSize: "15px",
+          fontSize: "18px",
           color: "#64748b",
           paddingTop: "6px",
         }}
