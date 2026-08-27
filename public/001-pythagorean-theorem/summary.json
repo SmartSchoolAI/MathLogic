@@ -1,172 +1,106 @@
 {
   "id": "001-pythagorean-theorem",
-  "title": "勾股定理 (Pythagorean Theorem)",
+  "title": "勾股定理与其三大经典证明 (Pythagorean Theorem & 3 Proofs)",
   "subtitle": "直角三角形两直角边的平方和等于斜边的平方",
   "formula": "a^2 + b^2 = c^2",
-  "audioDurationSeconds": 18.168,
+  "audioDurationSeconds": 71.352,
   "fps": 30,
-  "durationInFrames": 546,
-  "formulaCard": {
-    "badge": "核心公式",
-    "description": "其中 a 与 b 为直角边，c 为斜边。"
-  },
-  "geometry": {
-    "title": "直角三角形几何示意图 (RoughJS)",
-    "canvasWidth": 380,
-    "canvasHeight": 280,
-    "vertices": {
-      "A": [80, 60],
-      "B": [300, 240],
-      "C": [80, 240]
-    },
-    "edges": [
-      {
-        "id": "a",
-        "symbol": "a",
-        "name": "直角边",
-        "color": "#38bdf8",
-        "from": "C",
-        "to": "B",
-        "startFrame": 175,
-        "duration": 45,
-        "strokeWidth": 4,
-        "seed": 101
-      },
-      {
-        "id": "b",
-        "symbol": "b",
-        "name": "直角边",
-        "color": "#818cf8",
-        "from": "C",
-        "to": "A",
-        "startFrame": 225,
-        "duration": 45,
-        "strokeWidth": 4,
-        "seed": 102
-      },
-      {
-        "id": "c",
-        "symbol": "c",
-        "name": "斜边",
-        "color": "#f59e0b",
-        "from": "A",
-        "to": "B",
-        "startFrame": 275,
-        "duration": 45,
-        "strokeWidth": 4.5,
-        "seed": 103
-      }
-    ],
-    "fill": {
-      "color": "rgba(56, 189, 248, 0.15)",
-      "fillStyle": "hachure",
-      "startFrame": 320,
-      "seed": 104
-    },
-    "rightAngleMark": {
-      "x": 80,
-      "y": 216,
-      "width": 24,
-      "height": 24,
-      "color": "#f43f5e",
-      "startFrame": 320,
-      "seed": 105
-    },
-    "edgeLabels": [
-      {
-        "symbol": "a",
-        "color": "#38bdf8",
-        "left": "180px",
-        "bottom": "10px",
-        "fontSize": "24px",
-        "startFrame": 175
-      },
-      {
-        "symbol": "b",
-        "color": "#818cf8",
-        "left": "45px",
-        "top": "140px",
-        "fontSize": "24px",
-        "startFrame": 225
-      },
-      {
-        "symbol": "c",
-        "color": "#f59e0b",
-        "left": "205px",
-        "top": "125px",
-        "fontSize": "26px",
-        "startFrame": 275
-      }
-    ],
-    "vertexLabels": [
-      {
-        "name": "C",
-        "left": "55px",
-        "bottom": "15px",
-        "color": "#94a3b8",
-        "startFrame": 320
-      },
-      {
-        "name": "B",
-        "left": "310px",
-        "bottom": "15px",
-        "color": "#94a3b8",
-        "startFrame": 320
-      },
-      {
-        "name": "A",
-        "left": "55px",
-        "top": "40px",
-        "color": "#94a3b8",
-        "startFrame": 320
-      }
-    ]
-  },
-  "timeline": {
-    "headerStartFrame": 0,
-    "triangleStartFrame": 15,
-    "formulaStartFrame": 40,
-    "drawingStartFrame": 175,
-    "formulaHighlightStartFrame": 385
-  },
+  "durationInFrames": 2141,
   "audio": {
-    "full": "001-pythagorean-theorem/audio.mp3",
-    "parts": [
-      {
-        "id": "p1",
-        "file": "001-pythagorean-theorem/p1.mp3",
-        "text": "欢迎来到数学逻辑课。今天我们来学习勾股定理。"
-      },
-      {
-        "id": "p2",
-        "file": "001-pythagorean-theorem/p2.mp3",
-        "text": "对于任意直角三角形，两条直角边 a 和 b 的平方和，等于斜边 c 的平方。"
-      },
-      {
-        "id": "p3",
-        "file": "001-pythagorean-theorem/p3.mp3",
-        "text": "即公式：a 的平方加上 b 的平方，等于 c 的平方。"
-      }
-    ]
+    "full": "001-pythagorean-theorem/audio.mp3"
   },
+  "sections": [
+    {
+      "id": "section-1",
+      "type": "definition",
+      "title": "1. 定理基本定义",
+      "subtitle": "直角三角形三边几何关系",
+      "startFrame": 0,
+      "endFrame": 409
+    },
+    {
+      "id": "section-2",
+      "type": "area-squares-proof",
+      "title": "2. 证明法一：三边正方形面积法",
+      "subtitle": "直角边正方形面积之和等于斜边正方形面积",
+      "formula": "Area(a^2) + Area(b^2) = Area(c^2)",
+      "startFrame": 409,
+      "endFrame": 1049
+    },
+    {
+      "id": "section-3",
+      "type": "zhao-shuang-proof",
+      "title": "3. 证明法二：赵爽弦图拼接法",
+      "subtitle": "四个全等直角三角形围成斜边正方形",
+      "formula": "4 \\times (\\frac{1}{2}ab) + (b-a)^2 = c^2",
+      "startFrame": 1049,
+      "endFrame": 1656
+    },
+    {
+      "id": "section-4",
+      "type": "garfield-proof",
+      "title": "4. 证明法三：加菲尔德梯形面积法",
+      "subtitle": "梯形总面积等于三个内切三角形面积之和",
+      "formula": "\\frac{1}{2}(a+b)^2 = 2 \\times (\\frac{1}{2}ab) + \\frac{1}{2}c^2",
+      "startFrame": 1656,
+      "endFrame": 2140
+    }
+  ],
   "subtitles": [
     {
       "id": 1,
+      "sectionId": "section-1",
       "startFrame": 0,
-      "endFrame": 165,
-      "text": "欢迎来到数学逻辑课。今天我们来学习勾股定理。"
+      "endFrame": 394,
+      "text": "欢迎来到数学逻辑课。今天我们来深入学习并证明勾股定理。在任意直角三角形中，两直角边 a 和 b 的平方和，等于斜边 c 的平方。"
     },
     {
       "id": 2,
-      "startFrame": 165,
-      "endFrame": 385,
-      "text": "对于任意直角三角形，两条直角边 a 和 b 的平方和，等于斜边 c 的平方。"
+      "sectionId": "section-2",
+      "startFrame": 409,
+      "endFrame": 1034,
+      "text": "第一种证明方法：三边正方形面积法。我们在直角边 a、b 和斜边 c 上分别构建正方形。直角边正方形面积分别为 a 的平方与 b 的平方。可以看到，这两个正方形的面积相加，恰好等于斜边正方形的面积 c 的平方。"
     },
     {
       "id": 3,
-      "startFrame": 385,
-      "endFrame": 546,
-      "text": "即公式：a 的平方加上 b 的平方，等于 c 的平方。"
+      "sectionId": "section-3",
+      "startFrame": 1049,
+      "endFrame": 1641,
+      "text": "第二种证明方法：我国古代著名的赵爽弦图。将四个全等的直角三角形围成一个边长为 c 的大正方形，中间留有一个边长为 b 减 a 的小正方形。化简总面积后同样精准导出 a 的平方加 b 的平方等于 c 的平方。"
+    },
+    {
+      "id": 4,
+      "sectionId": "section-4",
+      "startFrame": 1656,
+      "endFrame": 2125,
+      "text": "第三种证明方法：加菲尔德梯形法。利用两个全等直角三角形拼成直角梯形，梯形的总面积等于三个内切三角形的面积之和，展开化简后再次完美证明了勾股定理。"
     }
-  ]
+  ],
+  "proofsData": {
+    "section1": {
+      "title": "直角三角形基本定义",
+      "a": 3,
+      "b": 4,
+      "c": 5
+    },
+    "section2": {
+      "title": "证明一：三边正方形面积法",
+      "desc": "边长为 a, b 的正方形面积之和 (a² + b²) 恰好拼成斜边正方形面积 c²",
+      "squareAColor": "#38bdf8",
+      "squareBColor": "#818cf8",
+      "squareCColor": "#f59e0b"
+    },
+    "section3": {
+      "title": "证明二：中国古代赵爽弦图法",
+      "desc": "4个全等直角三角形 (2ab) + 中间小正方形 (b-a)² = 斜边大正方形 c²",
+      "triangleColor": "#38bdf8",
+      "innerSquareColor": "#f43f5e"
+    },
+    "section4": {
+      "title": "证明三：加菲尔德梯形面积法",
+      "desc": "直角梯形总面积 = 2个直角三角形 + 1个等腰直角三角形",
+      "trapezoidColor": "#818cf8",
+      "hypotenuseTriangleColor": "#f59e0b"
+    }
+  }
 }
