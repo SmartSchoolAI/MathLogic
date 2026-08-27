@@ -3,9 +3,9 @@
   "title": "勾股定理与其三大经典证明 (Pythagorean Theorem & 3 Proofs)",
   "subtitle": "直角三角形两直角边的平方和等于斜边的平方",
   "formula": "a^2 + b^2 = c^2",
-  "audioDurationSeconds": 73.2,
+  "audioDurationSeconds": 91.56,
   "fps": 30,
-  "durationInFrames": 2196,
+  "durationInFrames": 2747,
   "audio": {
     "full": "001-pythagorean-theorem/audio.mp3"
   },
@@ -14,36 +14,36 @@
       "id": "section-1",
       "type": "definition",
       "title": "1. 定理基本定义",
-      "subtitle": "直角三角形三边几何关系",
+      "subtitle": "直角三角形ABC与边长关系",
       "startFrame": 0,
-      "endFrame": 420
+      "endFrame": 584
     },
     {
       "id": "section-2",
       "type": "area-squares-proof",
-      "title": "2. 证明法一：三边正方形面积法",
-      "subtitle": "直角边正方形面积之和等于斜边正方形面积",
+      "title": "2. 证明一：三边正方形面积法",
+      "subtitle": "Area(a²) + Area(b²) = Area(c²)",
       "formula": "Area(a^2) + Area(b^2) = Area(c^2)",
-      "startFrame": 420,
-      "endFrame": 1072
+      "startFrame": 584,
+      "endFrame": 1352
     },
     {
       "id": "section-3",
       "type": "zhao-shuang-proof",
-      "title": "3. 证明法二：赵爽弦图拼接法",
-      "subtitle": "四个全等直角三角形围成斜边正方形",
-      "formula": "4 \\times (\\frac{1}{2}ab) + (b-a)^2 = c^2",
-      "startFrame": 1072,
-      "endFrame": 1690
+      "title": "3. 证明二：赵爽弦图抵消证明",
+      "subtitle": "2ab + (b-a)² = c² ⇒ 2ab与-2ab抵消",
+      "formula": "2ab + (b-a)^2 = c^2 \\Longrightarrow a^2 + b^2 = c^2",
+      "startFrame": 1352,
+      "endFrame": 2105
     },
     {
       "id": "section-4",
       "type": "garfield-proof",
-      "title": "4. 证明法三：加菲尔德梯形面积法",
-      "subtitle": "梯形总面积等于三个内切三角形面积之和",
-      "formula": "\\frac{1}{2}(a+b)^2 = 2 \\times (\\frac{1}{2}ab) + \\frac{1}{2}c^2",
-      "startFrame": 1690,
-      "endFrame": 2197
+      "title": "4. 证明三：加菲尔德梯形抵消法",
+      "subtitle": "½(a+b)² = ab + ½c² ⇒ 两侧消去ab",
+      "formula": "\\frac{1}{2}(a+b)^2 = ab + \\frac{1}{2}c^2 \\Longrightarrow a^2 + b^2 = c^2",
+      "startFrame": 2105,
+      "endFrame": 2747
     }
   ],
   "subtitles": [
@@ -57,51 +57,51 @@
     {
       "id": 2,
       "sectionId": "section-1",
-      "startFrame": 199,
-      "endFrame": 405,
-      "text": "在任意直角三角形中，两直角边 a 和 b 的平方和，等于斜边 c 的平方。"
+      "startFrame": 200,
+      "endFrame": 566,
+      "text": "在任意直角三角形ABC中，直角边为 a 和 b，斜边为 c。勾股定理指出：a的平方加上b的平方，恒等于斜边c的平方。"
     },
     {
       "id": 3,
       "sectionId": "section-2",
-      "startFrame": 420,
-      "endFrame": 693,
-      "text": "第一种证明方法：三边正方形面积法。我们在直角边 a、b 和斜边 c 上分别构建正方形。"
+      "startFrame": 584,
+      "endFrame": 863,
+      "text": "第一种证明方法：三边正方形面积法。我们在直角边 a、b 和斜边 c 上分别向外作正方形。"
     },
     {
       "id": 4,
       "sectionId": "section-2",
-      "startFrame": 701,
-      "endFrame": 1057,
-      "text": "直角边正方形面积分别为 a 的平方与 b 的平方。可以看到，这两个正方形的面积相加，恰好等于斜边正方形的面积 c 的平方。"
+      "startFrame": 872,
+      "endFrame": 1334,
+      "text": "蓝色的面积为 a的平方，紫色的面积为 b的平方。将这两个正方形面积叠加，恰好填满斜边正方形 c的平方，直观验证了 a的平方加b的平方等于c的平方。"
     },
     {
       "id": 5,
       "sectionId": "section-3",
-      "startFrame": 1072,
-      "endFrame": 1482,
-      "text": "第二种证明方法：我国古代著名的赵爽弦图。将四个全等的直角三角形围成一个边长为 c 的大正方形，中间留有一个边长为 b 减 a 的小正方形。"
+      "startFrame": 1352,
+      "endFrame": 1696,
+      "text": "第二种证明方法：我国古代著名的赵爽弦图。四个直角三角形面积和为 2ab，中间小正方形面积为 b减a的平方。"
     },
     {
       "id": 6,
       "sectionId": "section-3",
-      "startFrame": 1490,
-      "endFrame": 1675,
-      "text": "化简总面积后同样精准导出 a 的平方加 b 的平方等于 c 的平方。"
+      "startFrame": 1705,
+      "endFrame": 2087,
+      "text": "展开相加得到 2ab 加 b的平方 减 2ab 加 a的平方。这里的 2ab 刚好互相抵消！完美导出 a的平方加b的平方等于c的平方。"
     },
     {
       "id": 7,
       "sectionId": "section-4",
-      "startFrame": 1690,
-      "endFrame": 1928,
-      "text": "第三种证明方法：加菲尔德梯形法。利用两个全等直角三角形拼成直角梯形。"
+      "startFrame": 2105,
+      "endFrame": 2361,
+      "text": "第三种证明方法：加菲尔德梯形法。直角梯形总面积等于三个内切三角形的面积之和。"
     },
     {
       "id": 8,
       "sectionId": "section-4",
-      "startFrame": 1936,
-      "endFrame": 2182,
-      "text": "梯形的总面积等于三个内切三角形的面积之和，展开化简后再次完美证明了勾股定理。"
+      "startFrame": 2370,
+      "endFrame": 2729,
+      "text": "展开梯形面积公式后，两边的 ab 项刚好互相消去！两边同时乘以 2，再次完美证明了 a的平方加b的平方等于c的平方。"
     }
   ]
 }
